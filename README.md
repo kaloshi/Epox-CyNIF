@@ -67,12 +67,14 @@ Interactive quality control using **CyLinter** pipeline. Validates feature data,
 *Reference:*
 - CyLinter: [DOI: 10.1038/s41592-024-02328-0](https://doi.org/10.1038/s41592-024-02328-0)
 
-### 6/7) Spatial Analysis & Statistics (v18)
+### 6/7) Spatial Analysis & Statistics
 - `Spatial_analysis/Cycif_pipeline_part_6_run_data_frames.py`  
-- `Spatial_analysis/Cycif_pipeline_part_7_statistics_v18_2groups_CORRECT.py`  
-- `Spatial_analysis/Cycif_pipeline_part_7_statistics_healthy_vs_mutations_v18_SIMPLE.py`  
+- `Spatial_analysis/Cycif_pipeline_part_7a_statistics_2groups.py`  
+- `Spatial_analysis/Cycif_pipeline_part_7b_statistics_multigroup.py`  
 
-Spatial analysis contextualizes cellular phenotypes within tissue architecture. Analysis restricted to orthogonal crypt cross-sections to avoid stereological bias. Cells assigned to compartments (Crypt-associated with 31px buffer ~10µm, or Lamina Propria). Statistics use non-parametric tests (Mann-Whitney U, Kruskal-Wallis with Dunn's post-hoc, Benjamini-Hochberg correction). Patient-level aggregation prevents pseudoreplication.
+Spatial analysis contextualizes cellular phenotypes within tissue architecture. Analysis restricted to orthogonal crypt cross-sections to avoid stereological bias. Cells assigned to compartments (Crypt-associated with buffer zone, or Lamina Propria). Statistics use non-parametric tests (Mann-Whitney U, Kruskal-Wallis with Dunn's post-hoc, Benjamini-Hochberg correction). Sample-level aggregation prevents pseudoreplication.
+
+**Note:** These are template scripts. Users must provide their own sample identifiers and group assignments.
 
 *References:*
 - Stereological considerations: [DOI: 10.1590/S0100-69912012000200010](https://doi.org/10.1590/S0100-69912012000200010)
@@ -155,9 +157,10 @@ If you use this pipeline, please cite the relevant tools:
 
 ⚠️ **Important Notice:**
 - This repository contains **code only** – no patient data, images, or identifiable information is included.
-- Sample identifiers used in the scripts (e.g., `193`, `197`) are **internal laboratory codes** that cannot be traced back to individual patients.
-- The `patient_groups.csv` file referenced in the code is **not included** in this repository and must be created locally.
+- All sample identifiers and group names in the scripts are **generic placeholders** (e.g., `SAMPLE_001`, `GROUP_A`).
+- The `group_assignments.csv` file referenced in the code is **not included** and must be created locally by users.
 - Users are responsible for ensuring compliance with local ethics regulations (e.g., IRB/ethics committee approval) and data protection laws (GDPR, HIPAA) when applying this pipeline to their own data.
+- No disease names, genetic information, or clinical details are contained in this repository.
 
 ## License
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
