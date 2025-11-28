@@ -1,86 +1,111 @@
 # Epoxy_CyNif Pipeline v1.0
 
-Epoxy-based Cyclic Nanobody Immunofluorescence (Epoxy_CyNif) – End-to-end Workflow für mehrzyklisches Staining/Imaging: Illumination-Korrektur, Stitching/Registration/Decon+EDF, Spillover/AF-Removal, Segmentierung, GUI-basierte QC (CyLinter) und räumliche Statistik.
+🔬 **Epoxy-based Cyclic Nanobody Immunofluorescence (Epoxy_CyNif)** – End-to-end workflow for multicycle staining/imaging: illumination correction, stitching/registration/deconvolution+EDF, spillover/autofluorescence removal, segmentation, GUI-based QC (CyLinter), and spatial statistics.
+
+📖 **[View Documentation](https://kaloshi.github.io/Epo_CyNif/)**
 
 ## TL;DR
-- Eingaben: Mehrzyklische TIFF/CZI-Stapel plus Marker-CSV pro Sample.
-- Pfade: `BASE_EXPORT = C:\Users\researcher\data\Epoxy_CyNif\Epoxy_CyNif\data\export\<sample>`.
-- Ablauf: Part 1 → 2 → 3 → 4a/4b → 5 (CyLinter QC) → 6/7 (Statistik).
-- Tag 2+: In Part 5 nur Zellen 2–3 + erweiterte GUI (Cell 12), Checkpoints gezielt löschen, ab gewünschtem Modul neu starten.
-- Outputs: Segmentation/Processed/Clustering in `BASE_EXPORT`, CyLinter-Checkpoints/-Reports in `cylinter_output_prune_test/`, Statistik in `python/analysis-V18/`.
+- **Inputs:** Multicycle TIFF/CZI stacks plus marker CSV per sample.
+- **Paths:** `BASE_EXPORT = C:\Users\researcher\data\Epoxy_CyNif\data\export\<sample>`.
+- **Workflow:** Part 1 → 2 → 3 → 4a/4b → 5 (CyLinter QC) → 6/7 (Statistics).
+- **Day 2+:** In Part 5, run cells 2–3 + extended GUI (Cell 12), delete checkpoints selectively, restart from desired module.
+- **Outputs:** Segmentation/Processed/Clustering in `BASE_EXPORT`, CyLinter checkpoints/reports in `cylinter_output_prune_test/`, statistics in `python/analysis-V18/`.
 
-## Inhalte (Module)
-1) **Part 1 – Illumination/Stitching/Registration/Decon&EDF**  
-   `Illumination_correction,Stiching,Registration,Decon&EDF/Cycif_pipeline_part_1_stiching_REG_decon_EDF.ipynb`  
-   Illumination-Korrektur, Stitching, Registrierung, Deconvolution/EDF; erzeugt fused multichannel Stacks.
+## Pipeline Modules
 
-2) **Part 2 – Spillover Removal**  
-   `Spillover&AF_removal/Cycif_pipeline_part_2_Spillover.ipynb`  
-   Mutual-Information Spillover-Schätzung, 0–1 Normalisierung, Rücktransformation in Original-Datentyp.
+### 1) Part 1 – Illumination/Stitching/Registration/Decon&EDF
+`Illumination_correction,Stiching,Registration,Decon&EDF/Cycif_pipeline_part_1_stiching_REG_decon_EDF.ipynb`  
+Illumination correction, stitching, registration, deconvolution/EDF; generates fused multichannel stacks.
 
-3) **Part 3 – AF Removal (ACE)**  
-   `Spillover&AF_removal/Cycif_pipeline_part_3_AF_REV_ACE.ipynb`  
-   Autofluoreszenz-Bereinigung auf dem Stack.
+### 2) Part 2 – Spillover Removal
+`Spillover&AF_removal/Cycif_pipeline_part_2_Spillover.ipynb`  
+Mutual information spillover estimation, 0–1 normalization, back-transformation to original data type.
 
-4a) **Segmentation**  
-   `Segmentation/Cycif_pipeline_part_4a_segmentation.ipynb`  
-   `SAMPLE_ID` setzen, Marker-CSV aus `BASE_EXPORT` laden, DAPI-Optimierung (beste Preprocessing-Variante), InstanSeg Nuclei/Cells, Feature-Exports.
+### 3) Part 3 – Autofluorescence Removal (ACE)
+`Spillover&AF_removal/Cycif_pipeline_part_3_AF_REV_ACE.ipynb`  
+Autofluorescence correction on the image stack.
 
-4b) **Batch Segmentation Helper**  
-   `Segmentation/Cycif_pipeline_part_4b_batch_MICROSAM_ROBUST_V8.ipynb`  
-   Batch/robuste Segmentierung für mehrere Samples.
+### 4a) Segmentation
+`Segmentation/Cycif_pipeline_part_4a_segmentation.ipynb`  
+Set `SAMPLE_ID`, load marker CSV from `BASE_EXPORT`, DAPI optimization (best preprocessing variant), InstanSeg nuclei/cells, feature exports.
 
-5) **CyLinter QC (GUI)**  
-   `Cylinter/Cycif_pipeline_part_5_cylinter.ipynb`  
-   Tag 1: kompletter Lauf mit Marker-Auswahl + Pipeline-Start.  
-   Tag 2+: erweiterte GUI, Checkpoints löschen, ab Modul X neu starten.  
-   Nutzt `cylinter_config.yml` + `markers.csv` im Notebook-Ordner; Checkpoints/Reports in `cylinter_output_prune_test/`.
+### 4b) Batch Segmentation Helper
+`Segmentation/Cycif_pipeline_part_4b_batch_MICROSAM_ROBUST_V8.ipynb`  
+Batch/robust segmentation for multiple samples.
 
-6/7) **Spatial Analysis & Statistics (v18)**  
-   `Spatial_analysis/Cycif_pipeline_part_6_run_data_frames.py`  
-   `Spatial_analysis/Cycif_pipeline_part_7_statistics_v18_2groups_CORRECT.py`  
-   `Spatial_analysis/Cycif_pipeline_part_7_statistics_healthy_vs_mutations_v18_SIMPLE.py`  
-   Frequenzmetriken und Gruppen-Statistiken für LP/Crypt und Mutationsgruppen; erwartet Inputs unter `python/analysis-V18/`.
+### 5) CyLinter QC (GUI)
+`Cylinter/Cycif_pipeline_part_5_cylinter.ipynb`  
+- **Day 1:** Complete run with marker selection + pipeline start.  
+- **Day 2+:** Extended GUI, delete checkpoints, restart from module X.  
+Uses `cylinter_config.yml` + `markers.csv` in notebook folder; checkpoints/reports in `cylinter_output_prune_test/`.
 
-## Datenlayout
-- Root pro Sample: `BASE_EXPORT = C:\Users\researcher\data\Epoxy_CyNif\Epoxy_CyNif\data\export\<sample>`
-- Marker: `markers_<SAMPLE_ID>.csv` im Sample-Ordner.  
-  (Legacy-Fallback in Part 4a Cell 9: ggf. Kopie mit „193“ im Dateinamen bereitstellen.)
-- Outputs:  
-  - Segmentation/Processed/Clustering in `BASE_EXPORT`  
-  - CyLinter Checkpoints/Reports: `cylinter_output_prune_test/`  
-  - Statistik: `python/analysis-V18/`
+### 6/7) Spatial Analysis & Statistics (v18)
+- `Spatial_analysis/Cycif_pipeline_part_6_run_data_frames.py`  
+- `Spatial_analysis/Cycif_pipeline_part_7_statistics_v18_2groups_CORRECT.py`  
+- `Spatial_analysis/Cycif_pipeline_part_7_statistics_healthy_vs_mutations_v18_SIMPLE.py`  
 
-## Arbeitsablauf
-- **Tag 1 (Erstlauf)**: Part 1 → Part 2 → Part 3 → Part 4a/4b → Part 5 (CyLinter Tag 1) → Part 6/7.
-- **Tag 2+ / Fehlerkorrektur**:  
-  - Part 5 Kernel neu starten, Zellen 2–3 ausführen.  
-  - Erweiterte GUI (Cell 12) öffnen, Checkpoint(s) löschen, Startmodul wählen, laufen lassen.  
-  - Interactive GUIs: `selectROIs`, `setContrast`, `gating`. Marker ohne Threshold werden erneut gegated.
+Frequency metrics and group statistics for LP/Crypt and mutation groups; expects inputs in `python/analysis-V18/`.
 
-## Anforderungen / Pakete
-- python 3.9.x–3.11.x
-- pandas 2.2.x; numpy 1.26.x; scipy 1.12.x
-- scikit-image 0.22.x; tifffile 2024.x; shapely 2.0.x
-- matplotlib 3.8.x; seaborn 0.13.x
-- ipywidgets 8.1.x; pyyaml 6.0.x
-- instanseg (Model `fluorescence_nuclei_and_cells`, aktueller Release)
-- cylinter (CLI/GUI, aktueller Release)
-- napari (optional für visuelle Kontrolle)
+## Data Layout
+- **Sample root:** `BASE_EXPORT = C:\Users\researcher\data\Epoxy_CyNif\data\export\<sample>`
+- **Markers:** `markers_<SAMPLE_ID>.csv` in sample folder.
+- **Outputs:**  
+  - Segmentation/Processed/Clustering → `BASE_EXPORT`  
+  - CyLinter Checkpoints/Reports → `cylinter_output_prune_test/`  
+  - Statistics → `python/analysis-V18/`
 
-## Hinweise zur QC / Checkpoints (CyLinter)
-- Checkpoints: `cylinter_output_prune_test/checkpoints/*.parquet`
-- Gating-Thresholds: `cylinter_report.yml` (bleiben über Läufe erhalten)
-- `--module X` setzt den Startpunkt, Endpunkt ist immer das Pipeline-Ende; Checkpoints überspringen bereits erledigte Module.
+## Workflow
+- **Day 1 (Initial run):** Part 1 → Part 2 → Part 3 → Part 4a/4b → Part 5 (CyLinter) → Part 6/7.
+- **Day 2+ / Error correction:**  
+  - Restart Part 5 kernel, run cells 2–3.  
+  - Open extended GUI (Cell 12), delete checkpoint(s), select start module, run.  
+  - Interactive GUIs: `selectROIs`, `setContrast`, `gating`. Markers without threshold will be re-gated.
 
-## Zweck / Nutzen
-- Rekonstruiert hochdimensionale Cyclic IF Nanobody-Stapel (Epoxy_CyNif) über alle Zyklen.
-- Entfernt technische Artefakte (Illumination, Spillover, AF) für reproduzierbare Quantifizierung.
-- Führt robuste Zell-/Kern-Segmentierung mit DAPI-Optimierung durch und exportiert Feature-Tabellen.
-- Bietet interaktive QC (CyLinter) mit Checkpointing für schnelle Tag-2+ Iterationen.
-- Berechnet räumliche Häufigkeiten und Gruppen-Statistiken für Downstream-Analysen.
+## Requirements
+```
+python 3.9.x–3.11.x
+pandas>=2.2.0
+numpy>=1.26.0
+scipy>=1.12.0
+scikit-image>=0.22.0
+tifffile>=2024.1.0
+shapely>=2.0.0
+matplotlib>=3.8.0
+seaborn>=0.13.0
+ipywidgets>=8.1.0
+pyyaml>=6.0.0
+instanseg  # Model: fluorescence_nuclei_and_cells
+cylinter   # CLI/GUI
+napari     # Optional: visual inspection
+```
 
-## Rechtliches / Attribution
-- Drittpakete (InstanSeg, CyLinter, scikit-image, tifffile, shapely, pandas, numpy, seaborn, ipywidgets, pyyaml, napari) entsprechend ihrer Lizenzen nennen (typisch MIT/BSD/Apache; GPL/AGPL beachten).
-- Keine fremden Daten ohne Freigabe veröffentlichen; Modell-/Paper-Zitationen gemäß Tool-Doku ergänzen.
-- Eigenes Lizenzfile (z.B. MIT) und Requirements/Env-Datei für GitHub beilegen.
+See [requirements.txt](requirements.txt) for full dependency list.
+
+## Installation
+```bash
+pip install -r requirements.txt
+```
+
+## QC / Checkpoints (CyLinter)
+- **Checkpoints:** `cylinter_output_prune_test/checkpoints/*.parquet`
+- **Gating thresholds:** `cylinter_report.yml` (persists across runs)
+- `--module X` sets start point; end point is always pipeline end; checkpoints skip completed modules.
+
+## Key Features
+- Reconstructs high-dimensional cyclic IF nanobody stacks (Epoxy_CyNif) across all cycles.
+- Removes technical artifacts (illumination, spillover, autofluorescence) for reproducible quantification.
+- Performs robust cell/nucleus segmentation with DAPI optimization and exports feature tables.
+- Provides interactive QC (CyLinter) with checkpointing for fast day-2+ iterations.
+- Computes spatial frequencies and group statistics for downstream analyses.
+
+## Citation
+If you use this pipeline, please cite the following tools:
+
+- **InstanSeg:** Goldsborough, T. et al. (2024) *InstanSeg: an embedding-based instance segmentation algorithm*. [arXiv:2408.15954](https://doi.org/10.48550/arXiv.2408.15954)
+- **CyLinter:** Laboratory of Systems Pharmacology, Harvard Medical School. [GitHub](https://github.com/labsyspharm/cylinter)
+
+## License
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+
+## Acknowledgments
+Third-party packages (InstanSeg, CyLinter, scikit-image, tifffile, shapely, pandas, numpy, seaborn, ipywidgets, pyyaml, napari) are used under their respective licenses (MIT/BSD/Apache).
