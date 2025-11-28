@@ -28,24 +28,34 @@ This project uses the following third-party software:
 
 1. InstanSeg (Apache-2.0 License)
    https://github.com/instanseg/instanseg
-   Citation: Goldsborough, T. et al. (2024) 'InstanSeg: an embedding-based 
-   instance segmentation algorithm optimized for accurate, efficient and 
-   portable cell segmentation'. arXiv. https://doi.org/10.48550/arXiv.2408.15954
+   Citation: Goldsborough, T. et al. (2024) DOI: 10.1101/2024.09.04.611150
 
 2. CyLinter (MIT License)
    https://github.com/labsyspharm/cylinter
-   Laboratory of Systems Pharmacology, Harvard Medical School
+   Citation: Baker et al. (2024) DOI: 10.1038/s41592-024-02328-0
 
-3. scikit-image (BSD License)
+3. Micro-SAM (MIT License)
+   https://github.com/computational-cell-analytics/micro-sam
+   Citation: Archit et al. (2024) DOI: 10.1038/s41592-024-02580-4
+
+4. BaSiCpy (MIT License)
+   https://github.com/peng-lab/BaSiCPy
+   Citation: Peng et al. (2017) DOI: 10.1038/ncomms14836
+
+5. Ashlar (MIT License)
+   https://github.com/labsyspharm/ashlar
+   Citation: Muhlich et al. (2022) DOI: 10.1093/bioinformatics/btac544
+
+6. scikit-image (BSD License)
    https://scikit-image.org/
 
-4. pandas, numpy, scipy (BSD License)
+7. pandas, numpy, scipy (BSD License)
    https://pandas.pydata.org/, https://numpy.org/, https://scipy.org/
 
-5. Shapely (BSD License)
+8. Shapely (BSD License)
    https://shapely.readthedocs.io/
 
-6. Matplotlib, Seaborn (BSD/MIT License)
+9. Matplotlib, Seaborn (BSD/MIT License)
    https://matplotlib.org/, https://seaborn.pydata.org/
 
 All third-party packages retain their original licenses.

@@ -151,8 +151,19 @@ If you use this pipeline, please cite the relevant tools:
 - **Stereology**: Teixeira et al. (2012) *Corpuscle problem in stereology.* [DOI: 10.1590/S0100-69912012000200010](https://doi.org/10.1590/S0100-69912012000200010)
 - **Pseudoreplication**: Lazic (2010) *The problem of pseudoreplication in neuroscientific studies.* [DOI: 10.1186/1471-2202-11-5](https://doi.org/10.1186/1471-2202-11-5)
 
+## Data Privacy & Ethics
+
+⚠️ **Important Notice:**
+- This repository contains **code only** – no patient data, images, or identifiable information is included.
+- Sample identifiers used in the scripts (e.g., `193`, `197`) are **internal laboratory codes** that cannot be traced back to individual patients.
+- The `patient_groups.csv` file referenced in the code is **not included** in this repository and must be created locally.
+- Users are responsible for ensuring compliance with local ethics regulations (e.g., IRB/ethics committee approval) and data protection laws (GDPR, HIPAA) when applying this pipeline to their own data.
+
 ## License
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
 
 ## Acknowledgments
 Third-party packages (InstanSeg, CyLinter, scikit-image, tifffile, shapely, pandas, numpy, seaborn, ipywidgets, pyyaml, napari) are used under their respective licenses (MIT/BSD/Apache).
+
+## Disclaimer
+This software is provided for research purposes only. The authors make no warranties regarding its fitness for clinical or diagnostic use.
